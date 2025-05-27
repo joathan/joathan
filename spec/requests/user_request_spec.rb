@@ -40,5 +40,18 @@ RSpec.describe "Users", type: :request do
         expect(result.map { |element| element['id'] }.sort).to eq(User.ids.sort)
       end
     end
+
+    context 'when filtering by partial username (case-insensitive)' do
+      let!(:matching_user_1) { create(:user, username: 'maxwell') }
+      let!(:matching_user_2) { create(:user, username: 'Matilda') }
+      let!(:non_matching_user) { create(:user, username: 'john') }
+
+      it 'returns users that partially match the username' do
+        get users_path, params: { username: 'ma' }
+
+        expect(result.map { |user| user['username'] }).to include('maxwell', 'Matilda')
+        expect(result.map { |user| user['username'] }).not_to include('john')
+      end
+    end
   end
 end
