@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Tweets', type: :request do
-  let!(:company) { Company.create!(name: 'Default Corp') }
+  let!(:company) { Company.create!(name: 'Test Corp') }
 
   describe 'GET /tweets' do
     let!(:user) { User.create!(username: 'test_user', company: company) }
