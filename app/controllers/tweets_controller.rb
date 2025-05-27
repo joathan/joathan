@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class TweetsController < ApplicationController
   def index
     tweets = Tweets::Fetcher.new(
