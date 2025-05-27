@@ -1,0 +1,29 @@
+services:
+
+  app:
+    platform: linux/amd64
+    stdin_open: true
+    tty: true
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: app-interview
+    ports:
+      - "3001:3001"
+    volumes:
+      - .:/rails
+    command: bash entrypoint.sh
+
+  emailcatcher:
+    image: dockage/mailcatcher:0.9.0
+    container_name: email
+    ports:
+      - "1025:1025"
+      - "1080:1080"
+    volumes:
+      - ./data:/app/data
+    restart: unless-stopped
+
+volumes:
+  data:
+    driver: local
